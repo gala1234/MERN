@@ -1,7 +1,7 @@
-const mongoose = requiere("mongoose");
-const express = requiere("express");
-const bodyParser = requiere("body-parser");
-const logger = requiere("morgan");
+const mongoose = require("mongoose");
+const express = require("express");
+const bodyParser = require("body-parser");
+const logger = require("morgan");
 const Data = ("./data");
 
 const API_PORT = 3001;
@@ -9,7 +9,7 @@ const app = express();
 const router = express.Router();
 
 // My MongoDB 
-const mongoDB = "mongodb://gala:1playaSoleada@ds111455.mlab.com:11455/mern";
+const mongoDB = "mongodb://gala:gala123@ds111455.mlab.com:11455/mern";
 
 // conexion between my backend and DB
 mongoose.connect(
@@ -61,7 +61,7 @@ router.get("/getData", (req, res) => {
 // update method, overwrites existing data in the DB
 router.post("/updateData", (req, res) => {
     const {id, update} = req.body;
-    Data.findOneAndUpdate(id, update, err => {
+    Data.findByIdAndUpdate(id, update, err => {
         if(err) return res.json({ success: false, error: err });
         return res.json({ success: true });
     });
@@ -70,7 +70,7 @@ router.post("/updateData", (req, res) => {
 // delete method, remove existing data in the DB 
 router.delete("/deleteData", (req, res) => {
     const { id } = req.body;
-    Data.findOneAndDelete(id, err => {
+    Data.findByIdAndDelete(id, err => {
       if (err) return res.send(err);
       return res.json({ success: true });
     });
